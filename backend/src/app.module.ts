@@ -24,7 +24,7 @@ import { entities } from './TypeOrm';
           username: configService.get<string>('POSTGRES_USER'),
           password: configService.get<string>('POSTGRES_PASSWORD'),
           database: configService.get<string>('POSTGRES_DB'),
-          entities: entities ,
+          entities: entities,
           synchronize: true,
         };
       },
@@ -36,4 +36,3 @@ import { entities } from './TypeOrm';
   providers: [AppService],
 })
 export class AppModule {}
-

@@ -1,9 +1,13 @@
-import { Controller, Get, Query, Req, Res, UseGuards } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { FortyTwoAuthGuard } from './guards/fortytwo.guard';
+import {
+  Controller,
+  Get,
+  Redirect,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { AuthenticatedGuard, FortyTwoAuthGuard } from './guards/fortytwo.guard';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt.guard';
-import { IUser } from 'src/TypeOrm/Entities/users.entity';
 
 @Controller('auth/42')
 export class AuthController {
@@ -11,22 +15,28 @@ export class AuthController {
 
   @UseGuards(FortyTwoAuthGuard)
   @Get('login')
-  register(@Req() req: Request) {}
-
-  @UseGuards(FortyTwoAuthGuard)
-  @Get('callback')
-  login(@Req() req: Request) {
-    return this.authService.login(req.user as IUser);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('test')
-  mytest(@Req() req: Request) {
+  register(@Req() req: Request) {
     return req.user;
   }
 
+  @UseGuards(FortyTwoAuthGuard)
+  @Get('callback')
+  @Redirect('/auth/42/test')
+  login(@Req() req: Request) {
+    return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('test')
+  mytest(@Req() req: Request) {
+    return "test";
+  }
+
+  @UseGuards(AuthenticatedGuard)
   @Get('logout')
-  async logout(@Req() request: Request, @Res() response: Response) {
-    return response.status(200);
+  async logOut(@Req() req: Request) {
+    // logOut() => removes the session from the memory of the webserver
+    req.logOut(() => void {}); // without the callback an error occured...
+    req.session.cookie.maxAge = 0;
   }
 }

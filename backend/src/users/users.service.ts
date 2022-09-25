@@ -13,26 +13,29 @@ export class UsersService {
   ) {}
 
   // save() is a "Repository" method (from Typeorm) to call insert query
-  async create(user: IUser): Promise<IUser> {
+  async create(user: IUser): Promise<UsersEntity> {
     const newUser = this.userRepo.create(user);
     return await this.userRepo.save(newUser);
   }
 
   // find() is a "Repository" method to call select query
   // ? throw exception if not found ?
+  // unuse
   async findAllUsers(): Promise<UsersEntity[]> {
     return await this.userRepo.find();
   }
 
-  async getByUsername(usernameToFind: string): Promise<UsersEntity> {
+  // unuse
+  async getByLogin(loginToFind: string): Promise<UsersEntity> {
     return await this.userRepo.findOneBy({
-      username: usernameToFind,
+      login: loginToFind,
     });
   }
 
+  // unuse
   async getByEmail(emailToFind: string): Promise<UsersEntity> {
     return await this.userRepo.findOneBy({
-      emails: emailToFind,
+      email: emailToFind,
     });
   }
 
@@ -42,10 +45,19 @@ export class UsersService {
     });
   }
 
+  // unuse
   async updateUser(id: number, user: IUser): Promise<UpdateResult> {
     return await this.userRepo.update(id, user);
   }
 
+  // async updateToken(id: number, access_token: string): Promise<UsersEntity> {
+  //   const user = await this.getById(id);
+  //   user.accessToken = access_token;
+  //   await this.userRepo.save(user);
+  //   return await this.getById(id);
+  // }
+
+  // unuse
   async deleteUser(id: number): Promise<DeleteResult> {
     return await this.userRepo.delete(id);
   }
