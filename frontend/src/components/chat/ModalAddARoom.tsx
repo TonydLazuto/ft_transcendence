@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const ModalAddARoom = ({ addARoom, toggle }) => {
-  const [password, setPassword] = useState<String>(null);
-  const [roomName, setRoomName] = useState<String>(null);
-  const [typeRoom, setTypeRoom] = useState<String>("-1");
+  const [password, setPassword] = useState<string>("");
+  const [roomName, setRoomName] = useState<string>("");
+  const [typeRoom, setTypeRoom] = useState<string>("-1");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     addARoom(roomName, typeRoom, password);
   };

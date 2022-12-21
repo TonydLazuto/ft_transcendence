@@ -10,7 +10,7 @@ const ModalRoomSettings = ({
   deleteChannelPassword,
   deleteARoom,
 }) => {
-  const [password, setPassword] = useState<String>("");
+  const [password, setPassword] = useState<string>("");
   const handleUpdatePassword = (newPassword: String) => {
     updateChannelPassword(newPassword);
   };
@@ -23,16 +23,16 @@ const ModalRoomSettings = ({
     deleteARoom(activeRoom);
   };
 
-  const handleSubmitUpdatePassword = (event: FormEvent) => {
+  const handleSubmitUpdatePassword = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleUpdatePassword(password);
   };
 
-  const handleSubmitDeletePassword = (event: FormEvent) => {
+  const handleSubmitDeletePassword = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleDeletePassword();
   };
-  const handleSubmitDeleteRoom = (event: FormEvent) => {
+  const handleSubmitDeleteRoom = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleDeleteRoom(activeRoom);
   };
@@ -49,7 +49,7 @@ const ModalRoomSettings = ({
             </form>
           </div>
           <div className="password-settings">
-            {type == 2 ? (
+            {type === 2 ? (
               <form onSubmit={handleSubmitUpdatePassword}>
                 <input
                   type="password"
@@ -58,7 +58,7 @@ const ModalRoomSettings = ({
                 <button>update password</button>
               </form>
             ) : null}
-            {type == 2 ? (
+            {type === 2 ? (
               <form onSubmit={handleSubmitDeletePassword}>
                 <button>delete password</button>
               </form>
