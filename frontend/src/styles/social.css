@@ -1,0 +1,127 @@
+
+.socialContainer {
+  width: 90%;
+  height: 80vh;
+  margin-top: 5vh;
+  margin-left: 5%;
+  background: rgb(82, 59, 130);
+  background: -moz-linear-gradient(90deg,
+      rgba(82, 59, 130, 1) 0%,
+      rgba(48, 34, 75, 1) 40%,
+      rgba(82, 59, 130, 1) 100%);
+  background: -webkit-linear-gradient(90deg,
+      rgba(82, 59, 130, 1) 0%,
+      rgba(48, 34, 75, 1) 40%,
+      rgba(82, 59, 130, 1) 100%);
+  background: linear-gradient(90deg,
+      rgba(82, 59, 130, 1) 0%,
+      rgba(48, 34, 75, 1) 40%,
+      rgba(82, 59, 130, 1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid whitesmoke;
+  border-radius: 30px;
+  position: relative;
+}
+
+.socialContainer .sortButtons {
+  max-width: 100%;
+  width: 100%;
+  margin-top: 2%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+}
+.socialContainer .sortButtons button {
+  display: inline-block;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  max-width: 100%;
+  background-color: transparent;
+  color: whitesmoke;
+  font-size: 24px;
+  font-style: bold;
+  width: 20%;
+}
+.socialContainer .sortButtons button:hover {
+  display: inline-block;
+  height: 100%;
+  border-radius: 70px;
+  border: none;
+  max-width: 100%;
+  background-color: whitesmoke;
+  color: rgb(82, 59, 130);
+  font-size: 24px;
+  font-style: bold;
+}
+
+.socialContainer .sortButtons .friendNotif {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.socialContainer .sortButtons .friendNotif::after {
+  content: " ";
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+  background-color: rgb(72, 40, 96);
+}
+
+.socialContainer .searchBar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 10%;
+  width: 100%;
+}
+
+.socialContainer .leaderboard {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 90%;
+}
+
+/* Search Bar */
+.searchContainer {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 90%;
+  width: 80%;
+  overflow: auto;
+}
+
+.searchContainer::-webkit-scrollbar {
+  width: 10px;
+  background-color: whitesmoke;
+}
+
+.searchContainer::-webkit-scrollbar-track {
+  background-color: #523B82;
+}
+.searchContainer::-webkit-scrollbar-thumb {
+  background-color: whitesmoke;
+  
+}
+
+/* FriendList */
+
+.socialContainer .friendListContainer {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 90%;
+  width: 80%;
+  overflow: auto;
+}

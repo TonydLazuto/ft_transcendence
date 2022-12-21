@@ -1,0 +1,96 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.background {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-width: 100vw;
+  background: #333333;
+}
+
+.rectanglelog {
+  border: 1px solid whitesmoke;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  width: 310px;
+  height: 85px;
+  border-radius: 30px;
+  background: #196f9f;
+}
+
+.rectangleguest {
+  border: 1px solid whitesmoke;
+  margin: auto;
+  width: 310px;
+  height: 200px;
+  border-radius: 30px;
+  background: #196f9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.login {
+  text-align: center;
+  color: white;
+}
+
+.items {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.input {
+  text-decoration: none;
+  border-radius: 75px;
+  text-align: center;
+  background: #3b3b3b;
+  color: whitesmoke;
+}
+
+.blank {
+  text-align: center;
+  color: rgb(155, 0, 0);
+  font-size: 13px;
+  height: 18px;
+}
+
+.btnconfirm {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 150px;
+  height: 50px;
+  border-radius: 75px;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: #523b82;
+}
+
+.btnconfirm:hover {
+  box-shadow: 0 5px 35px 0 whitesmoke;
+}
+
+.guestPic {
+  border-radius: 50%;
+}
+.homeContainer {
+  text-align: center;
+  color: whitesmoke;
+}

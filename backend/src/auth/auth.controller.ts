@@ -3,40 +3,57 @@ import {
   Get,
   Redirect,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { AuthenticatedGuard, FortyTwoAuthGuard } from './guards/fortytwo.guard';
-import { AuthService } from './auth.service';
+import { Response } from 'express';
+import { RequestWithUser } from 'src/TypeOrm/DTOs/User.dto';
+import { UsersService } from 'src/users/users.service';
+import { FortyTwoAuthGuard } from './guards/fortytwo.guard';
 
 @Controller('auth/42')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+	private usersService: UsersService) {}
 
   @UseGuards(FortyTwoAuthGuard)
   @Get('login')
-  register(@Req() req: Request) {
-    return req.user;
-  }
+  register() {}
 
   @UseGuards(FortyTwoAuthGuard)
   @Get('callback')
-  @Redirect('/auth/42/test')
-  login(@Req() req: Request) {
+  @Redirect('verify2fa')
+  login(@Req() req: RequestWithUser) {
+    if (req.user) {
+      this.usersService.updateStatusUser(req.user.id, 'online');
+    }
     return req.user;
   }
 
-  @UseGuards(AuthenticatedGuard)
-  @Get('test')
-  mytest(@Req() req: Request) {
-    return "test";
+  @Get('verify2fa')
+  verify2fa(@Req() req: RequestWithUser, @Res() res: Response) {
+    const { isTwoFAEnabled } = req.user;
+    if (isTwoFAEnabled)
+      res.redirect('http://localhost:3000/twofa-validation')
+    else
+      res.redirect('http://localhost:3000')
+    return req.user;
   }
 
-  @UseGuards(AuthenticatedGuard)
   @Get('logout')
-  async logOut(@Req() req: Request) {
+  @Redirect('http://localhost:3000')
+  async logOut(@Req() req: RequestWithUser) {
     // logOut() => removes the session from the memory of the webserver
-    req.logOut(() => void {}); // without the callback an error occured...
-    req.session.cookie.maxAge = 0;
+    if (req.user) {
+	//   console.log("infos: "+req.user.name+", "+req.user.inGame)
+      this.usersService.updateStatusUser(req.user.id, 'offline');
+      if (req.user.isTwoFAValidated)
+        this.usersService.setTwoFACertif(req.user.id, false);
+      req.logOut((err) => {
+        if (err) console.log(err);
+      }); // without the callback an error occured...
+      // set maxAge to 0 remove the cookie from the browser
+      req.session.cookie.maxAge = 0;
+    }
   }
 }

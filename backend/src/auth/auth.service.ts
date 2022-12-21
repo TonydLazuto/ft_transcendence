@@ -1,41 +1,33 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { IUser } from 'src/TypeOrm/Entities/users.entity';
+import { Injectable } from '@nestjs/common';
+import { UsersEntity } from 'src/TypeOrm';
+import { UserDTO } from 'src/TypeOrm/DTOs/User.dto';
 import { UsersService } from 'src/users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private usersService: UsersService) {}
 
-  async register(user: IUser): Promise<IUser> {
-    const { id } = user;
-    const userFound = await this.usersService.getById(id);
+  async register(user: UserDTO, buffer: Buffer): Promise<UsersEntity> {
+    const { login } = user;
+    const userFound = await this.usersService.getByLogin(login); //name = login
     if (userFound) return userFound;
-    return await this.usersService.create(user);
+
+    return await this.usersService.create(user, buffer);
   }
-
-  // async login(user: IUser) {
-  //   const payload = {
-  //     name: user.login,
-  //     sub: user.id,
+  // async register(user: UserDTO): Promise<TokenPayload> {
+  //   const { id } = user;
+  //   const userFound = await this.usersService.getById(id);
+  //   let tokenPayload: TokenPayload = {
+  //     user: userFound,
+  //     isSecondFactorAuthenticated: false
   //   };
-  //   const access_token = await this.jwtService.signAsync(payload, {
-  //     secret: this.configService.get<string>('JWT_SECRET'),
-  //     expiresIn: 3600, // 1h
-  //   });
-  //   const hash_token = await bcrypt.hash(access_token, 10);
-  //   const { id: userId } = user;
-
-  //   await this.usersService.updateToken(userId, hash_token);
-  //   return { access_token: access_token };
-  // }
-
-  // async findUserById(userId: number): Promise<IUser | undefined> {
-  //   return await this.usersService.getById(userId);  
+  //   if (userFound) {
+  //     if (userFound.isTwoFAEnabled) {
+  //       tokenPayload.isSecondFactorAuthenticated = true;
+  //     }
+  //     return tokenPayload;
+  //   }
+  //   tokenPayload.user = await this.usersService.create(user);
+  //   return tokenPayload;
   // }
 }
